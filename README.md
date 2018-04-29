@@ -20,4 +20,11 @@ We can test it via below commands:
 #psql -h localhost -d order-service --user docker -p 5432
 
 
-2
+2 - Product/Order/Payment Service 
+
+For this I have build an image with cloned github URLs respectivaely. You can find dockerfile-{product/order/payment) respectively. Then I am using them in docker compose file to download it and run it with necessary parameters required to run the SpringBoot Application.
+
+
+3 - Monitoring 
+
+For this I 

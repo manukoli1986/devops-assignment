@@ -1,0 +1,62 @@
+version: '2.2'
+services:
+###########
+  DB:
+    image: docker.io/postgres
+    container_name: DB
+    environment:
+      - POSTGRES_USER=docker
+      - POSTGRES_PASSWORD=docker123
+      - POSTGRES_DB=order-service
+    ports:
+      - 5432:5432
+    restart: 
+      - always
+#############
+  Product_Service:
+    image: manukoli1986/nodejs-8
+    container_name: Product_Service
+    links: 
+      - DB:DB
+    ports:
+      - 9000:9000
+    command: npm start PORT=9000
+    restart:
+      - always
+############
+  Order_Service:
+    image: manukoli1986/grdle4jv8
+    container_name: Order_Service
+    links:
+      - DB:DB
+      - Product_Service:Product_Service
+    environment:
+      - SERVER_PORT=9001
+      - POSTGRES_HOST=DB
+      - POSTGRES_PORT=5432
+      - POSTGRES_USER=docker
+      - POSTGRES_PASSWORD=docker123
+      - PRODUCT_SERVICE_HOST=Product_Service
+      - PRODUCT_SERVICE_PORT=9000
+    ports:
+      - 9001:9001
+    command: gradle bootrun
+    restart:
+      - always
+###########
+  Payment_Service:
+    image: manukoli1986/gradle4jdk8payment
+    container_name: Payment_Service
+    links:
+      - DB:DB
+      - Product_Service:Product_Service
+      - Order_Service:Order_Service
+    environment:
+      - SERVER_PORT=9002
+      - ORDER_SERVICE_HOST=Order_Service
+      - ORDER_SERVICE_PORT=9001
+    ports:
+      - 9002:9002
+    command: gradle bootrun
+    restart:
+      - always
