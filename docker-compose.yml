@@ -10,8 +10,6 @@ services:
       - POSTGRES_DB=order-service
     ports:
       - 5432:5432
-    restart: 
-      - always
 #############
   Product_Service:
     image: manukoli1986/nodejs-8
@@ -21,8 +19,6 @@ services:
     ports:
       - 9000:9000
     command: npm start PORT=9000
-    restart:
-      - always
 ############
   Order_Service:
     image: manukoli1986/grdle4jv8
@@ -41,8 +37,6 @@ services:
     ports:
       - 9001:9001
     command: gradle bootrun
-    restart:
-      - always
 ###########
   Payment_Service:
     image: manukoli1986/gradle4jdk8payment
@@ -58,5 +52,21 @@ services:
     ports:
       - 9002:9002
     command: gradle bootrun
-    restart:
-      - always
+############
+  web_service:
+    image: php:apache
+    container_name: web_service
+    volumes:
+      - ./webapp/:/var/www/html/:Z
+    ports:
+      - 80:80
+    depends_on: 
+      - DB
+      - Product_Service
+      - Order_Service
+      - Payment_Service
+    links:
+      - DB:DB
+      - Product_Service:Product_Service
+      - Order_Service:Order_Service
+      - Payment_Service:Payment_Service
