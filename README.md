@@ -49,8 +49,8 @@ For this I have build an image with cloned github URLs respectivaely. You can fi
 
 For this I have create bash script which will capture docker container stats and will be displayed on apache container. I tried with php script to automatically to fetch it but unable to do it due to time constraint. And I have already taken 3 days extension. We can also run docker container for monitoring and alert services like ( Prometheus/Collected/Alertd/Grafana etc ). 
 
-Kindly create cron job to send docker stats to status.txt file under ~/webapp/. 
-* * * * * SLEEP 5s; root <download_directory>/webapp/status.sh  
+We need to run below command to run script and it will send data to status.txt every 5 secs. Go to download folder and run below command which will keep running script at backend.
+"nohup <Download_directory>./status.sh &"
 
 4. Web Service
 
