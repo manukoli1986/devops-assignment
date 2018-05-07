@@ -21,8 +21,13 @@ CONTAINER ID        IMAGE                             COMMAND                  C
 a044b912ea2f        manukoli1986/nodejs-8             "npm start PORT=9000"    6 minutes ago       Up 6 minutes             0.0.0.0:9000->9000/tcp   Product_Service
 a534edfd8f31        docker.io/postgres                "docker-entrypoint..."   6 minutes ago       Up 6 minutes             0.0.0.0:5432->5432/tcp   DB
 
-2. Set cron job to fetch docker container stats
-"* * * * * sleep 15; /<Download-location>/webapp/status.sh" 
+2. Run script to fetch docker container stats
+We need to run below command to run script and it will send data to status.txt every 5 secs. Go to download folder and run below command which will keep running script at backend.
+"nohup ./status.sh &" 
+
+
+##################################################################################################################################################
+##################################################################################################################################################
 
 1 - PostgreSQL DB
 
